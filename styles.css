@@ -514,10 +514,10 @@ h3 {
   flex-direction: column;
   align-items: center;
   gap: 0.24rem;
-  font-family: "Bodoni Moda", Georgia, serif;
+  font-family: "Playfair Display", "Bodoni Moda", Georgia, serif;
   line-height: 1;
   letter-spacing: 0.1em;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 .hero-title-main {
@@ -526,17 +526,19 @@ h3 {
 }
 
 .hero-title-support {
-  font-size: clamp(0.92rem, 1.2vw, 1.2rem);
+  font-size: clamp(0.56rem, 0.8vw, 0.8rem);
   font-weight: 500;
   letter-spacing: 0.62em;
   padding-left: 0.62em;
-  opacity: 0.72;
+  opacity: 0.65;
 }
 
 .hero-title-focus {
-  font-size: clamp(4.9rem, 10.4vw, 7.4rem);
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-size: clamp(5.8rem, 12vw, 9rem);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #d4a574;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .hero-lead {
@@ -681,13 +683,13 @@ h3 {
   }
 
   .hero-title-support {
-    font-size: clamp(0.82rem, 2vw, 0.98rem);
+    font-size: clamp(0.5rem, 1.5vw, 0.75rem);
     letter-spacing: 0.44em;
     padding-left: 0.44em;
   }
 
   .hero-title-focus {
-    font-size: clamp(4rem, 13vw, 5.3rem);
+    font-size: clamp(5rem, 14vw, 7rem);
   }
 
   .hero-lead {
