@@ -586,34 +586,27 @@ h3 {
 }
 
 .hero-title-main {
-  font-size: clamp(1.6rem, 4.8vw, 4.2rem);
+  font-size: clamp(1.1rem, 2.4vw, 2.2rem);
   font-weight: 500;
   width: 100%;
   overflow: visible;
 }
 
 .hero-title-support {
-  /* küçük üst yazı — mevcut gibi ama biraz daha esnek */
-  font-size: clamp(0.46rem, 1.4vw, 0.8rem);
-  font-weight: 500;
-  letter-spacing: 0.62em;
-  padding-left: 0.62em;
-  opacity: 0.65;
+  /* DESIGN: ana vurgu olacak şekilde büyütüldü */
+  font-size: clamp(2.2rem, 6.5vw, 5.6rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding-left: 0.12em;
+  opacity: 1;
   width: 100%;
 }
 
-/*
-  ANA SORUN BU SATIR: "MİMARLIK" yazısı sabit büyük boyutlarda kırılıyordu.
-  Çözüm: font-size tamamen vw-bağımlı hale getirildi.
-  - Mobil 320px: ~8.5rem (320 * 0.265 ≈ 84.8px)
-  - Tablet 768px: ~10.5rem (768 * 0.137 ≈ 105px)
-  - Masaüstü 1200px+: 9rem (clamp max)
-  Letter-spacing da vw ile küçülüyor ki yazı taşmasın.
-*/
 .hero-title-focus {
-  font-size: clamp(3.2rem, 15.5vw, 9rem);
-  font-weight: 900;
-  letter-spacing: clamp(0.03em, 0.8vw, 0.1em);
+  /* MİMARLIK: daha küçük ikincil başlık */
+  font-size: clamp(1.2rem, 3.2vw, 3rem);
+  font-weight: 600;
+  letter-spacing: clamp(0.06em, 0.6vw, 0.16em);
   color: #d4a574;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   width: 100%;
@@ -785,14 +778,14 @@ h3 {
 
   /* "ZEN DESIGN" */
   .hero-title-main {
-    font-size: clamp(1.4rem, 6.5vw, 2.8rem);
+    font-size: clamp(1rem, 4.2vw, 1.8rem);
   }
 
-  /* küçük destek yazısı */
+  /* DESIGN: mobilde de büyük kalsın */
   .hero-title-support {
-    font-size: clamp(0.42rem, 1.8vw, 0.6rem);
-    letter-spacing: 0.36em;
-    padding-left: 0.36em;
+    font-size: clamp(1.6rem, 9vw, 3.2rem);
+    letter-spacing: 0.1em;
+    padding-left: 0.1em;
   }
 
   /*
@@ -805,8 +798,8 @@ h3 {
     max = 5rem → tablet geçişine kadar tutarlı kalır
   */
   .hero-title-focus {
-    font-size: clamp(2.6rem, 15.5vw, 5rem);
-    letter-spacing: clamp(0.02em, 0.5vw, 0.06em);
+    font-size: clamp(1rem, 5.8vw, 2rem);
+    letter-spacing: clamp(0.06em, 0.5vw, 0.12em);
   }
 
   .hero-lead {
@@ -855,12 +848,18 @@ h3 {
   }
 
   .hero-title-main {
-    font-size: clamp(1.2rem, 7vw, 1.8rem);
+    font-size: clamp(0.95rem, 6vw, 1.4rem);
+  }
+
+  .hero-title-support {
+    font-size: clamp(1.4rem, 10vw, 2.4rem);
+    letter-spacing: 0.08em;
+    padding-left: 0.08em;
   }
 
   .hero-title-focus {
-    font-size: clamp(2.2rem, 16vw, 3.5rem);
-    letter-spacing: 0.02em;
+    font-size: clamp(0.9rem, 6vw, 1.6rem);
+    letter-spacing: 0.08em;
   }
 
   .hero-content-home .hero-tagline {
