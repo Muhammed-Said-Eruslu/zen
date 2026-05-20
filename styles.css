@@ -129,10 +129,44 @@ main {
 
 .hero-title {
   font-family: "Cinzel", Georgia, serif;
-  font-size: clamp(2.6rem, 8.2vw, 5.4rem);
+  /* Genel başlık boyutunu makul düzeye çekiyoruz */
+  font-size: clamp(2rem, 5vw, 3.2rem);
   letter-spacing: 0.12em;
   color: var(--copper);
   font-weight: 500;
+}
+
+/* Başlık içindeki parçalara özel boyutlandırma */
+.hero-title span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hero-title-main {
+  /* ZEN: küçük destek başlık */
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  display: block;
+  margin-bottom: 6px;
+  color: var(--copper);
+  letter-spacing: 0.28em;
+}
+
+.hero-title-support {
+  /* DESIGN: daha büyük ve vurgulu */
+  font-size: clamp(3.2rem, 9vw, 7.2rem);
+  line-height: 1;
+  margin-left: 0.08em;
+  letter-spacing: 0.06em;
+}
+
+.hero-title-focus {
+  /* MİMARLIK: daha küçük, ikincil vurgu */
+  display: block;
+  font-size: clamp(0.55rem, 0.9vw, 0.9rem);
+  margin-top: 4px;
+  letter-spacing: 0.22em;
+  color: var(--text);
+  font-weight: 400;
 }
 
 .hero-sub {
