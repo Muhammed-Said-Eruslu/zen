@@ -1,237 +1,213 @@
 /**
  * stone-texture.js
- * Referans görseldeki koyu antrasit / bazalt taş dokusunu Canvas API
- * ile üretir. Sadece <body class="home-page"> olan sayfada çalışır.
- *
- * Kullanım: </body> kapanışından hemen önce ekle:
- * <script src="stone-texture.js"></script>
+ * Koyu obsidyen/bazalt taş dokusu: bakır mineral damarları, tane yüzeyi,
+ * vignette. Yalnızca body.home-page olan sayfalarda çalışır.
  */
-
 (function () {
   "use strict";
-
   if (!document.body.classList.contains("home-page")) return;
 
-  /* ─── CANVAS KURULUMU ──────────────────────────────────── */
   const canvas = document.createElement("canvas");
   canvas.id = "stone-canvas";
   document.body.insertBefore(canvas, document.body.firstChild);
-
   const ctx = canvas.getContext("2d");
 
-  /* ─── SEEDED PSEUDO-RANDOM ─────────────────────────────── */
+  /* ── SEEDED RNG ─────────────────────────────────────────── */
   let seed = 137;
   function rng() {
     seed = (seed * 1664525 + 1013904223) >>> 0;
     return seed / 0xffffffff;
   }
-  function rr(min, max) { return min + rng() * (max - min); }
+  function rr(a, b) { return a + rng() * (b - a); }
 
-  /* ─── ANA FONKSİYON ────────────────────────────────────── */
+  /* ── ÇIZIM ──────────────────────────────────────────────── */
   function draw() {
     seed = 137;
-    const W = canvas.width;
-    const H = canvas.height;
+    const W = canvas.width, H = canvas.height;
 
-    /* == KATMAN 1: Çok koyu temel zemin == */
-    ctx.fillStyle = "#0e0e0e";
+    /* 1 — Koyu obsidyen taban */
+    ctx.fillStyle = "#080808";
     ctx.fillRect(0, 0, W, H);
 
-    /* == KATMAN 2: Büyük hacimsel lekeler (taşın iç renk dalgalanması) == */
-    /* Görselde görülen o soluk beyaz/gri bulut benzeri alanlar */
-    for (let i = 0; i < 9; i++) {
-      const x  = rr(W * 0.05, W * 0.95);
-      const y  = rr(H * 0.05, H * 0.95);
-      const rx = rr(W * 0.15, W * 0.40);
-      const ry = rr(H * 0.12, H * 0.35);
-      /* çok düşük opaklık — sadece hafif aydınlanma */
-      const alpha = rr(0.04, 0.11);
-
-      const g = ctx.createRadialGradient(x, y, 0, x, y, Math.max(rx, ry));
-      g.addColorStop(0,   `rgba(90, 88, 85, ${alpha})`);
-      g.addColorStop(0.45, `rgba(60, 58, 56, ${alpha * 0.5})`);
+    /* 2 — Hacimsel derinlik bulutları */
+    for (let i = 0; i < 10; i++) {
+      const x  = rr(W * 0.04, W * 0.96);
+      const y  = rr(H * 0.04, H * 0.96);
+      const rx = rr(W * 0.14, W * 0.42);
+      const ry = rr(H * 0.11, H * 0.35);
+      const a  = rr(0.03, 0.10);
+      const ratio = ry / rx;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
+      g.addColorStop(0,   `rgba(72,67,61,${a})`);
+      g.addColorStop(0.5, `rgba(48,45,40,${a * 0.45})`);
       g.addColorStop(1,   "rgba(0,0,0,0)");
-
       ctx.save();
       ctx.translate(x, y);
-      /* elips için scale */
-      const ratio = ry / rx;
       ctx.scale(1, ratio);
-      ctx.translate(-x, -y / ratio);
-
+      ctx.translate(-x, -y);
       ctx.fillStyle = g;
       ctx.beginPath();
-      ctx.arc(x, y / ratio, rx, 0, Math.PI * 2);
+      ctx.arc(x, y, rx, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     }
 
-    /* == KATMAN 3: Orta ölçek lekeleri — taşın pürüzlü yüzeyi == */
-    for (let i = 0; i < 55; i++) {
-      const x = rr(0, W);
-      const y = rr(0, H);
-      const r = rr(W * 0.01, W * 0.055);
-      const alpha = rr(0.015, 0.055);
-
+    /* 3 — Orta ölçekli yüzey değişimi */
+    for (let i = 0; i < 65; i++) {
+      const x = rr(0, W), y = rr(0, H);
+      const r = rr(W * 0.007, W * 0.048);
+      const a = rr(0.010, 0.042);
       const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-      g.addColorStop(0,   `rgba(100, 97, 92, ${alpha})`);
-      g.addColorStop(1,   "rgba(0,0,0,0)");
-
+      g.addColorStop(0, `rgba(88,82,75,${a})`);
+      g.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = g;
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    /* == KATMAN 4: Karanlık çukur lekeleri — taşın koyu derinlikleri == */
-    for (let i = 0; i < 40; i++) {
-      const x = rr(0, W);
-      const y = rr(0, H);
-      const r = rr(W * 0.008, W * 0.04);
-      const alpha = rr(0.04, 0.14);
-
+    /* 4 — Koyu çukurlar */
+    for (let i = 0; i < 45; i++) {
+      const x = rr(0, W), y = rr(0, H);
+      const r = rr(W * 0.005, W * 0.030);
+      const a = rr(0.035, 0.115);
       const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-      g.addColorStop(0,   `rgba(0, 0, 0, ${alpha})`);
-      g.addColorStop(1,   "rgba(0,0,0,0)");
-
+      g.addColorStop(0, `rgba(0,0,0,${a})`);
+      g.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = g;
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    /* == KATMAN 5: Taş damarları / mikroçatlaklar == */
-    ctx.lineCap  = "round";
+    /* 5 — Damarlar ─────────────────────────────────────────── */
+    ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
-    /* Ana damarlar */
-    for (let i = 0; i < 12; i++) {
-      let x = rr(0, W);
-      let y = rr(0, H);
-      const segs  = Math.floor(rr(4, 12));
-      const alpha = rr(0.04, 0.13);
-      const lw    = rr(0.3, 1.2);
-
-      ctx.strokeStyle = `rgba(130, 125, 118, ${alpha})`;
-      ctx.lineWidth   = lw;
+    /* Bakır mineral damarları */
+    for (let i = 0; i < 9; i++) {
+      let x = rr(0, W), y = rr(0, H);
+      const segs = Math.floor(rr(5, 15));
+      const a  = rr(0.055, 0.22);
+      const lw = rr(0.35, 1.8);
+      ctx.strokeStyle = `rgba(184,138,68,${a})`;
+      ctx.lineWidth = lw;
       ctx.beginPath();
       ctx.moveTo(x, y);
-
       for (let s = 0; s < segs; s++) {
-        x += rr(-W * 0.1, W * 0.1);
+        x += rr(-W * 0.10, W * 0.10);
         y += rr(-H * 0.08, H * 0.08);
-        /* bezier kontrol noktası ile organik kıvrım */
-        const cpx = x + rr(-W * 0.04, W * 0.04);
-        const cpy = y + rr(-H * 0.04, H * 0.04);
-        ctx.quadraticCurveTo(cpx, cpy, x, y);
+        ctx.quadraticCurveTo(
+          x + rr(-W * 0.038, W * 0.038),
+          y + rr(-H * 0.038, H * 0.038),
+          x, y
+        );
       }
       ctx.stroke();
     }
 
-    /* İnce ikincil çatlaklar */
-    for (let i = 0; i < 60; i++) {
-      const x1 = rr(0, W), y1 = rr(0, H);
-      const x2 = x1 + rr(-W * 0.05, W * 0.05);
-      const y2 = y1 + rr(-H * 0.05, H * 0.05);
-      ctx.strokeStyle = `rgba(110, 106, 100, ${rr(0.02, 0.07)})`;
-      ctx.lineWidth   = rr(0.15, 0.55);
+    /* Sıcak amber ikincil damarlar */
+    for (let i = 0; i < 6; i++) {
+      let x = rr(0, W), y = rr(0, H);
+      const segs = Math.floor(rr(3, 9));
+      const a = rr(0.04, 0.13);
+      ctx.strokeStyle = `rgba(200,155,87,${a})`;
+      ctx.lineWidth = rr(0.2, 0.8);
       ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
+      ctx.moveTo(x, y);
+      for (let s = 0; s < segs; s++) {
+        x += rr(-W * 0.07, W * 0.07);
+        y += rr(-H * 0.06, H * 0.06);
+        ctx.quadraticCurveTo(
+          x + rr(-W * 0.025, W * 0.025),
+          y + rr(-H * 0.025, H * 0.025),
+          x, y
+        );
+      }
       ctx.stroke();
     }
 
-    /* == KATMAN 6: Piksel gürültüsü — taşın granül dokusu == */
-    /*
-      ImageData ile her piksele rastgele ±brightness.
-      Bu katman görseldeki "kum tane" hissini verir.
-      Koyu ağırlıklı: negatif gürültü pozitiften fazla.
-    */
-    const imgData = ctx.createImageData(W, H);
-    const data    = imgData.data;
-
-    for (let i = 0; i < data.length; i += 4) {
-      /* koyu tarafa çekimli gürültü */
-      const n = (rng() - 0.62) * 52;
-      const v = Math.max(0, Math.min(255, n));
-      data[i]     = v;
-      data[i + 1] = v;
-      data[i + 2] = Math.max(0, Math.min(255, v - 2)); /* hafif soğuk */
-      /* opaklık: çoğu piksel yarı saydam, bazıları daha opak */
-      data[i + 3] = Math.floor(rng() * 55 + 20);
+    /* Gri strüktürel çatlaklar */
+    for (let i = 0; i < 16; i++) {
+      let x = rr(0, W), y = rr(0, H);
+      const segs = Math.floor(rr(4, 12));
+      const a = rr(0.025, 0.095);
+      ctx.strokeStyle = `rgba(115,110,103,${a})`;
+      ctx.lineWidth = rr(0.25, 1.0);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      for (let s = 0; s < segs; s++) {
+        x += rr(-W * 0.09, W * 0.09);
+        y += rr(-H * 0.07, H * 0.07);
+        ctx.quadraticCurveTo(
+          x + rr(-W * 0.03, W * 0.03),
+          y + rr(-H * 0.03, H * 0.03),
+          x, y
+        );
+      }
+      ctx.stroke();
     }
 
+    /* Mikro çatlaklar */
+    for (let i = 0; i < 80; i++) {
+      const x1 = rr(0, W), y1 = rr(0, H);
+      ctx.strokeStyle = `rgba(100,96,90,${rr(0.012, 0.048)})`;
+      ctx.lineWidth = rr(0.10, 0.40);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x1 + rr(-W * 0.04, W * 0.04), y1 + rr(-H * 0.04, H * 0.04));
+      ctx.stroke();
+    }
+
+    /* 6 — Piksel tanesi (sıcak & koyu ağırlıklı) */
+    const imgData = ctx.createImageData(W, H);
+    const d = imgData.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const n = (rng() - 0.64) * 46;
+      const v = Math.max(0, Math.min(255, n));
+      d[i]     = Math.min(255, v + 2);
+      d[i + 1] = v;
+      d[i + 2] = Math.max(0, v - 4);
+      d[i + 3] = Math.floor(rng() * 48 + 16);
+    }
     ctx.putImageData(imgData, 0, 0);
 
-    /* == KATMAN 7: Hafif sıcak amber ton — görseldeki kahve ısısı == */
-    const warmGrad = ctx.createRadialGradient(
-      W * 0.40, H * 0.36, 0,
-      W * 0.50, H * 0.50, Math.max(W, H) * 0.8
+    /* 7 — Bakır/amber bloom */
+    const bloom = ctx.createRadialGradient(
+      W * 0.40, H * 0.34, 0,
+      W * 0.50, H * 0.50, Math.max(W, H) * 0.78
     );
-    warmGrad.addColorStop(0,   "rgba(160, 115, 70, 0.06)");
-    warmGrad.addColorStop(0.5, "rgba(120,  85, 50, 0.03)");
-    warmGrad.addColorStop(1,   "rgba(0,0,0,0)");
-    ctx.fillStyle = warmGrad;
+    bloom.addColorStop(0,    "rgba(184,138,68,0.058)");
+    bloom.addColorStop(0.32, "rgba(145,105,58,0.028)");
+    bloom.addColorStop(1,    "rgba(0,0,0,0)");
+    ctx.fillStyle = bloom;
     ctx.fillRect(0, 0, W, H);
 
-    /* == KATMAN 8: Güçlü vignette — kenarlar ve köşeler siyah == */
-    /*
-      Görselde köşeler neredeyse tam siyah, orta alan çok az daha açık.
-      İki aşamalı vignette: dairesel + köşe spotları.
-    */
-
-    /* Dairesel ana vignette */
-    const vig1 = ctx.createRadialGradient(
-      W / 2, H / 2, Math.min(W, H) * 0.15,
-      W / 2, H / 2, Math.max(W, H) * 0.82
+    /* 8 — Vignette */
+    const vig = ctx.createRadialGradient(
+      W / 2, H / 2, Math.min(W, H) * 0.10,
+      W / 2, H / 2, Math.max(W, H) * 0.80
     );
-    vig1.addColorStop(0,    "rgba(0,0,0,0)");
-    vig1.addColorStop(0.45, "rgba(0,0,0,0.15)");
-    vig1.addColorStop(0.75, "rgba(0,0,0,0.52)");
-    vig1.addColorStop(1,    "rgba(0,0,0,0.84)");
-    ctx.fillStyle = vig1;
+    vig.addColorStop(0,    "rgba(0,0,0,0)");
+    vig.addColorStop(0.38, "rgba(0,0,0,0.10)");
+    vig.addColorStop(0.70, "rgba(0,0,0,0.46)");
+    vig.addColorStop(1,    "rgba(0,0,0,0.82)");
+    ctx.fillStyle = vig;
     ctx.fillRect(0, 0, W, H);
 
-    /* 4 köşe için ayrı koyu nokta */
-    const corners = [[0, 0], [W, 0], [0, H], [W, H]];
-    corners.forEach(([cx, cy]) => {
-      const cr = Math.max(W, H) * 0.65;
-      const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, cr);
-      cg.addColorStop(0,    "rgba(0,0,0,0.72)");
-      cg.addColorStop(0.4,  "rgba(0,0,0,0.30)");
+    /* Köşe karartması */
+    [[0, 0], [W, 0], [0, H], [W, H]].forEach(([cx, cy]) => {
+      const r = Math.max(W, H) * 0.62;
+      const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      cg.addColorStop(0,    "rgba(0,0,0,0.68)");
+      cg.addColorStop(0.38, "rgba(0,0,0,0.22)");
       cg.addColorStop(1,    "rgba(0,0,0,0)");
       ctx.fillStyle = cg;
       ctx.fillRect(0, 0, W, H);
     });
-
-    /* Üst ve alt kenar karartması */
-    const topGrad = ctx.createLinearGradient(0, 0, 0, H * 0.28);
-    topGrad.addColorStop(0,   "rgba(0,0,0,0.55)");
-    topGrad.addColorStop(1,   "rgba(0,0,0,0)");
-    ctx.fillStyle = topGrad;
-    ctx.fillRect(0, 0, W, H * 0.28);
-
-    const botGrad = ctx.createLinearGradient(0, H, 0, H * 0.72);
-    botGrad.addColorStop(0,   "rgba(0,0,0,0.55)");
-    botGrad.addColorStop(1,   "rgba(0,0,0,0)");
-    ctx.fillStyle = botGrad;
-    ctx.fillRect(0, H * 0.72, W, H * 0.28);
-
-    /* Sol ve sağ kenar */
-    const leftGrad = ctx.createLinearGradient(0, 0, W * 0.18, 0);
-    leftGrad.addColorStop(0,  "rgba(0,0,0,0.45)");
-    leftGrad.addColorStop(1,  "rgba(0,0,0,0)");
-    ctx.fillStyle = leftGrad;
-    ctx.fillRect(0, 0, W * 0.18, H);
-
-    const rightGrad = ctx.createLinearGradient(W, 0, W * 0.82, 0);
-    rightGrad.addColorStop(0,  "rgba(0,0,0,0.45)");
-    rightGrad.addColorStop(1,  "rgba(0,0,0,0)");
-    ctx.fillStyle = rightGrad;
-    ctx.fillRect(W * 0.82, 0, W * 0.18, H);
   }
 
-  /* ─── RESIZE ───────────────────────────────────────────── */
+  /* ── RESIZE ─────────────────────────────────────────────── */
   function resize() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -245,5 +221,4 @@
     clearTimeout(t);
     t = setTimeout(resize, 150);
   });
-
 })();
