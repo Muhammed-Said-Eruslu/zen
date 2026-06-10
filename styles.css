@@ -22,7 +22,7 @@ body {
 }
 
 body {
-  font-family: "Cormorant Garamond", "Times New Roman", serif;
+  font-family: "Cormorant", Georgia, serif;
   color: var(--text);
   background:
     radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.06), transparent 38%),
@@ -99,7 +99,7 @@ img {
 .site-nav {
   display: flex;
   gap: clamp(14px, 3vw, 34px);
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -178,7 +178,7 @@ main {
 
 .hero-sub {
   margin-top: 8px;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: clamp(0.9rem, 2.2vw, 2rem);
   letter-spacing: 0.42em;
   text-transform: uppercase;
@@ -192,7 +192,7 @@ main {
 }
 
 .hero-name {
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: clamp(1.25rem, 2.5vw, 2.2rem);
   font-weight: 400;
 }
@@ -215,7 +215,7 @@ main {
   margin-top: 34px;
   border: 1px solid var(--copper);
   padding: 12px 38px;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.86rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -239,7 +239,7 @@ main {
 }
 
 .eyebrow {
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   text-transform: uppercase;
   font-size: 0.74rem;
   letter-spacing: 0.18em;
@@ -305,7 +305,7 @@ h3 {
 }
 
 .project-name {
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 1rem;
   letter-spacing: 0.04em;
 }
@@ -346,7 +346,7 @@ h3 {
 
 .cover-year {
   margin-top: 6px;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   color: var(--copper);
   font-size: 0.95rem;
 }
@@ -358,7 +358,7 @@ h3 {
 }
 
 .content-block h2 {
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.95rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -403,7 +403,7 @@ h3 {
 
 .gallery-caption {
   padding: 10px;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -440,7 +440,7 @@ h3 {
 }
 
 .panel h3 {
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.86rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -584,7 +584,7 @@ h3 {
   flex-direction: column;
   align-items: center;
   gap: 0.24rem;
-  font-family: "Playfair Display", "Bodoni Moda", Georgia, serif;
+  font-family: "Cormorant", Georgia, serif;
   line-height: 1;
   letter-spacing: 0.1em;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
@@ -625,7 +625,7 @@ h3 {
 
 .hero-lead {
   margin-top: clamp(28px, 3.8vh, 44px);
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: clamp(0.9rem, 1.43vw, 1.4rem);
   letter-spacing: 0.02em;
   color: #c89159;
@@ -666,7 +666,7 @@ h3 {
   margin-top: clamp(64px, 12.8vh, 170px);
   margin-bottom: 18px;
   color: #c89159;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: clamp(0.9rem, 1.16vw, 1.3rem);
   text-align: center;
   padding: 0 16px;
