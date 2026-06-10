@@ -30,19 +30,52 @@
             <h1 class="page-title">Projenizi Konuşalım</h1>
           </header>
 
-          <div class="contact-grid">
-            <article class="panel">
-              <h3>Ofis</h3>
-              <p>Gaziantep, Türkiye</p>
-            </article>
-
-            <article class="panel">
-              <h3>Bilgi</h3>
-              <p>
-                E-posta: info@zendesign.com<br />
-                Telefon: +90 532 000 00 00
+          <div class="contact-layout">
+            <!-- Form: formspree.io üzerinden ücretsiz bir form oluşturun,
+                 aldığınız ID'yi data-formspree-id değerine yazın. -->
+            <form class="contact-form" id="contact-form" novalidate
+                  data-formspree-id="">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cf-name">Ad Soyad</label>
+                  <input type="text" id="cf-name" name="name"
+                         placeholder="Adınız Soyadınız" required autocomplete="name" />
+                </div>
+                <div class="form-group">
+                  <label for="cf-email">E-posta</label>
+                  <input type="email" id="cf-email" name="email"
+                         placeholder="ornek@mail.com" required autocomplete="email" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cf-subject">Konu</label>
+                <input type="text" id="cf-subject" name="subject"
+                       placeholder="Proje konusu" required />
+              </div>
+              <div class="form-group">
+                <label for="cf-message">Mesaj</label>
+                <textarea id="cf-message" name="message" rows="6"
+                          placeholder="Projenizi kısaca anlatın…" required></textarea>
+              </div>
+              <button type="submit" class="btn-copper">Mesaj Gönder</button>
+              <p id="form-success" class="form-success">
+                Mesajınız iletildi. En kısa sürede dönüş yapacağız.
               </p>
-            </article>
+            </form>
+
+            <aside class="contact-aside">
+              <article class="panel">
+                <h3>Ofis</h3>
+                <p>Gaziantep, Türkiye</p>
+              </article>
+              <article class="panel">
+                <h3>İletişim</h3>
+                <p>
+                  E-posta: info@zendesign.com<br />
+                  Telefon: +90 532 000 00 00
+                </p>
+              </article>
+            </aside>
           </div>
         </div>
       </section>
@@ -51,6 +84,7 @@
     <footer class="site-footer">
       <p>&copy; 2026 ZEN DESIGN Mimarlık. Tüm hakları saklıdır.</p>
     </footer>
+    <script src="site.js"></script>
     <script src="stone-texture.js"></script>
   </body>
 </html>
