@@ -8,7 +8,7 @@
       name="description"
       content="ZEN DESIGN Mimarlık — Gaziantep merkezli mimarlık, iç mekân tasarımı ve anahtar teslim uygulama."
     />
-    <meta name="theme-color" content="#0c0c0d" />
+    <meta name="theme-color" content="#f5f4f0" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ZEN DESIGN Mimarlık" />
     <meta property="og:title" content="ZEN DESIGN Mimarlık" />
@@ -23,13 +23,14 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Josefin+Sans:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="home-page">
     <header class="site-header">
       <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="ZEN DESIGN Mimarlık — Anasayfa"><img src="zen-icon.jpg" alt="ZEN DESIGN" /></a>
         <nav class="site-nav" aria-label="Ana menü">
           <a href="index.html" class="active">ANASAYFA</a>
           <a href="portfolio.html">PROJELER</a>
@@ -50,20 +51,24 @@
     <main class="home-main">
       <section class="hero hero-home">
         <div class="hero-content hero-content-home">
+          <div class="hero-drop" aria-hidden="true"></div>
           <h1 class="hero-title hero-logo">
             <img
-              src="zen-logo.png"
+              src="zen-logo-dark.png"
               alt="ZEN DESIGN Mimarlık"
-              width="1600"
-              height="620"
+              width="1400"
+              height="543"
               fetchpriority="high"
             />
           </h1>
           <p class="hero-lead">
-            Gaziantep merkezli mimarlık ve iç mekân tasarımı
+            MİMARLIK <span class="sep" aria-hidden="true">|</span> İÇ MEKAN
+            <span class="sep" aria-hidden="true">|</span> UYGULAMA
           </p>
 
-          <p class="hero-tagline">Plan doğruysa, sonuç nettir.</p>
+          <p class="hero-tagline">
+            Plan doğruysa, <span class="tagline-accent">sonuç nettir.</span>
+          </p>
 
           <div class="hero-actions">
             <a class="btn-copper btn-solid" href="portfolio.html">Projeleri İncele</a>
@@ -80,6 +85,5 @@
       <p></p>
     </footer>
     <script src="site.js"></script>
-    <script src="stone-texture.js"></script>
   </body>
 </html>
