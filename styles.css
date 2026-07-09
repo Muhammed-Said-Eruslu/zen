@@ -107,7 +107,7 @@ h3 {
 
 .brand img {
   width: auto;
-  height: 42px;
+  height: 54px;
 }
 
 .brand:hover {
@@ -994,8 +994,14 @@ body.page-out {
     min-height: 60px;
   }
 
+  /* backdrop-filter, içindeki fixed menünün viewport yerine
+     header'a sabitlenmesine yol açıyor — mobilde kapat */
+  .site-header {
+    backdrop-filter: none;
+  }
+
   .brand img {
-    height: 32px;
+    height: 44px;
   }
 
   main {
@@ -1015,13 +1021,15 @@ body.page-out {
     position: fixed;
     inset: 0;
     width: 100%;
-    background: rgba(245, 244, 240, 0.98);
-    backdrop-filter: blur(8px);
+    background: var(--bg);
     z-index: 28;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    justify-content: safe center;
     gap: 26px;
+    padding: 80px 0 48px;
+    overflow-y: auto;
     opacity: 0;
     pointer-events: none;
     transition: opacity 280ms ease;
@@ -1146,6 +1154,12 @@ body.page-out {
 
   .form-row {
     grid-template-columns: 1fr;
+  }
+
+  /* 16px altı font, iOS'ta input odağında otomatik zoom yapar */
+  .form-group input,
+  .form-group textarea {
+    font-size: 16px;
   }
 
   .site-footer {
