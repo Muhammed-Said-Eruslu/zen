@@ -16,6 +16,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   min-height: 100%;
@@ -89,7 +93,7 @@ img {
 }
 
 .brand {
-  font-family: "Cinzel", Georgia, serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   font-size: clamp(1rem, 2vw, 1.28rem);
   letter-spacing: 0.22em;
   color: var(--text);
@@ -116,6 +120,72 @@ img {
   color: var(--text);
 }
 
+/* ─── NAV DROPDOWN (Hizmetler) ───────────────────────────── */
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-item > a::after {
+  content: "▾";
+  margin-left: 7px;
+  font-size: 0.72em;
+  opacity: 0.65;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 8px);
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  background: rgba(17, 17, 18, 0.97);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 0;
+  right: 0;
+  height: 16px;
+}
+
+.nav-item:hover .dropdown,
+.nav-item:focus-within .dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.dropdown a,
+.home-page .site-nav .dropdown a {
+  padding: 10px 20px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.dropdown a:hover,
+.home-page .site-nav .dropdown a:hover {
+  color: var(--text);
+  background: rgba(184, 138, 68, 0.08);
+}
+
 main {
   padding-top: 72px;
 }
@@ -135,45 +205,12 @@ main {
 }
 
 .hero-title {
-  font-family: "Cinzel", Georgia, serif;
+  font-family: "Josefin Sans", Arial, sans-serif;
   /* Genel başlık boyutunu makul düzeye çekiyoruz */
   font-size: clamp(2rem, 5vw, 3.2rem);
   letter-spacing: 0.12em;
   color: var(--copper);
   font-weight: 500;
-}
-
-/* Başlık içindeki parçalara özel boyutlandırma */
-.hero-title span {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.hero-title-main {
-  /* ZEN: küçük destek başlık */
-  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-  display: block;
-  margin-bottom: 6px;
-  color: var(--copper);
-  letter-spacing: 0.28em;
-}
-
-.hero-title-support {
-  /* DESIGN: daha büyük ve vurgulu */
-  font-size: clamp(3.2rem, 9vw, 7.2rem);
-  line-height: 1;
-  margin-left: 0.08em;
-  letter-spacing: 0.06em;
-}
-
-.hero-title-focus {
-  /* MİMARLIK: daha küçük, ikincil vurgu */
-  display: block;
-  font-size: clamp(0.55rem, 0.9vw, 0.9rem);
-  margin-top: 4px;
-  letter-spacing: 0.22em;
-  color: var(--text);
-  font-weight: 400;
 }
 
 .hero-sub {
@@ -214,18 +251,40 @@ main {
   display: inline-flex;
   margin-top: 34px;
   border: 1px solid var(--copper);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
   padding: 12px 38px;
   font-family: "Josefin Sans", Arial, sans-serif;
   font-size: 0.86rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--copper);
-  transition: background-color 180ms ease, color 180ms ease;
+  transition: background-color 180ms ease, color 180ms ease,
+    border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
 .btn-copper:hover {
   background: var(--copper);
   color: #1b1b1b;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(184, 138, 68, 0.22);
+}
+
+/* Dolgulu birincil buton — ikincil buton çerçeveli kalır */
+.btn-solid,
+.hero-actions .btn-copper.btn-solid {
+  background: var(--copper);
+  border-color: var(--copper);
+  color: #17140f;
+  font-weight: 600;
+}
+
+.btn-solid:hover,
+.hero-actions .btn-copper.btn-solid:hover {
+  background: #d9a76b;
+  border-color: #d9a76b;
+  color: #17140f;
 }
 
 /* ─── SECTIONS ───────────────────────────────────────────── */
@@ -254,8 +313,9 @@ h3 {
 
 .page-title {
   margin-top: 10px;
-  font-family: "Cinzel", Georgia, serif;
-  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-family: "Josefin Sans", Arial, sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 5.4vw, 3rem);
   letter-spacing: 0.08em;
 }
 
@@ -280,6 +340,7 @@ h3 {
   background: var(--bg-panel);
   overflow: hidden;
   min-height: 340px;
+  border-radius: 16px;
 }
 
 .project-card img {
@@ -287,6 +348,11 @@ h3 {
   height: 100%;
   object-fit: cover;
   filter: saturate(0.84) contrast(1.02);
+  transition: transform 480ms cubic-bezier(0.22, 0.65, 0.25, 1);
+}
+
+.project-card:hover img {
+  transform: scale(1.045);
 }
 
 .project-overlay {
@@ -333,8 +399,9 @@ h3 {
 }
 
 .cover-title {
-  font-family: "Cinzel", Georgia, serif;
-  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-family: "Josefin Sans", Arial, sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.7rem, 4.6vw, 3rem);
   letter-spacing: 0.06em;
 }
 
@@ -377,6 +444,8 @@ h3 {
   margin-top: 16px;
   border: 1px solid var(--line-soft);
   background: var(--bg-soft);
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .single-image img {
@@ -394,6 +463,8 @@ h3 {
 .gallery-item {
   border: 1px solid var(--line-soft);
   background: var(--bg-soft);
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .gallery-item img {
@@ -437,6 +508,16 @@ h3 {
   border: 1px solid var(--line-soft);
   background: rgba(30, 30, 30, 0.5);
   padding: 22px;
+  border-radius: 16px;
+}
+
+.panel a {
+  color: var(--copper);
+  transition: color 160ms ease;
+}
+
+.panel a:hover {
+  text-decoration: underline;
 }
 
 .panel h3 {
@@ -566,83 +647,53 @@ h3 {
 
 .hero-content-home {
   width: min(860px, 92vw);
-  padding-top: clamp(150px, 17vh, 232px);
+  padding-top: clamp(84px, 11vh, 150px);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 /*
-  KEY FIX: .hero-title içindeki tüm yazıların mobilde kırılmaması için
-  overflow-visible, word-break ve özellikle .hero-title-focus için
-  fluid font-size kullanılıyor. vw-based clamp değerleri tam ekrana sığacak
-  şekilde yeniden hesaplandı.
+  Marka kilidi: ZEN DESIGN.pdf'ten üretilen zen-logo.png
+  (ZEN + DESIGN + MİMARLIK). Metin yerine gerçek logo görseli.
 */
-.hero-content-home .hero-title {
-  color: #c89159;
+.hero-content-home .hero-title.hero-logo {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.24rem;
-  font-family: "Cormorant", Georgia, serif;
-  line-height: 1;
-  letter-spacing: 0.1em;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-  width: 100%;
-  text-align: center;
+  justify-content: center;
 }
 
-.hero-title-main {
-  font-size: clamp(1.1rem, 2.4vw, 2.2rem);
-  font-weight: 500;
-  width: 100%;
-  overflow: visible;
-}
-
-.hero-title-support {
-  /* DESIGN: ana vurgu olacak şekilde büyütüldü */
-  font-size: clamp(2.2rem, 6.5vw, 5.6rem);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  padding-left: 0.12em;
-  opacity: 1;
-  width: 100%;
-}
-
-.hero-title-focus {
-  /* MİMARLIK: daha küçük ikincil başlık */
-  font-size: clamp(1.2rem, 3.2vw, 3rem);
-  font-weight: 600;
-  letter-spacing: clamp(0.06em, 0.6vw, 0.16em);
-  color: #d4a574;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  width: 100%;
-  overflow: visible;
-  /* Taşma durumunda sığdır — son savunma hattı */
-  word-break: keep-all;
-  overflow-wrap: normal;
+.hero-logo img {
+  width: min(620px, 88vw);
+  height: auto;
+  filter: drop-shadow(0 20px 46px rgba(0, 0, 0, 0.55));
 }
 
 .hero-lead {
-  margin-top: clamp(28px, 3.8vh, 44px);
+  margin-top: clamp(26px, 3.6vh, 40px);
   font-family: "Josefin Sans", Arial, sans-serif;
-  font-size: clamp(0.9rem, 1.43vw, 1.4rem);
-  letter-spacing: 0.02em;
-  color: #c89159;
+  font-size: clamp(0.78rem, 1.05vw, 1rem);
+  letter-spacing: 0.24em;
+  line-height: 1.7;
+  text-transform: uppercase;
+  color: rgba(200, 145, 89, 0.85);
   text-align: center;
 }
 
 .hero-content-home .hero-tagline {
-  margin-top: clamp(72px, 8.8vh, 110px);
+  margin-top: clamp(48px, 7vh, 88px);
   color: #c89159;
-  font-size: clamp(2rem, 5vw, 3.9rem);
+  font-family: "Josefin Sans", Arial, sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.75rem, 4vw, 3.2rem);
   font-style: normal;
-  line-height: 1.24;
+  line-height: 1.22;
+  letter-spacing: 0.02em;
   text-align: center;
 }
 
 .hero-actions {
-  margin-top: clamp(100px, 17.5vh, 222px);
+  margin-top: clamp(52px, 8.5vh, 104px);
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
@@ -663,7 +714,7 @@ h3 {
 }
 
 .hero-founder {
-  margin-top: clamp(64px, 12.8vh, 170px);
+  margin-top: clamp(48px, 8vh, 96px);
   margin-bottom: 18px;
   color: #c89159;
   font-family: "Josefin Sans", Arial, sans-serif;
@@ -678,8 +729,95 @@ h3 {
   border-top: 1px solid rgba(184, 138, 68, 0.15);
 }
 
+/* Hero giriş animasyonu: öğeler kademeli olarak alttan belirir */
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-content-home > * {
+  animation: heroRise 640ms cubic-bezier(0.22, 0.65, 0.25, 1) both;
+}
+
+.hero-content-home > :nth-child(2) {
+  animation-delay: 110ms;
+}
+
+.hero-content-home > :nth-child(3) {
+  animation-delay: 220ms;
+}
+
+.hero-content-home > :nth-child(4) {
+  animation-delay: 330ms;
+}
+
+.hero-content-home > :nth-child(5) {
+  animation-delay: 440ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .hero-content-home > * {
+    animation: none;
+  }
+}
+
 .home-main + .site-footer {
   display: none;
+}
+
+/* ─── SERVICES (hizmetler.html) ──────────────────────────── */
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.service-card {
+  border: 1px solid var(--line-soft);
+  background: rgba(30, 30, 30, 0.5);
+  border-radius: 16px;
+  padding: 30px 26px 34px;
+  scroll-margin-top: 120px;
+  transition: border-color 220ms ease, transform 220ms ease;
+}
+
+.service-card:hover {
+  border-color: var(--line);
+  transform: translateY(-4px);
+}
+
+.service-no {
+  font-family: "Josefin Sans", Arial, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  color: var(--copper);
+}
+
+.service-card h2 {
+  margin-top: 12px;
+  font-family: "Josefin Sans", Arial, sans-serif;
+  font-size: 1.04rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.service-text {
+  margin-top: 12px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  font-size: clamp(1rem, 2vw, 1.14rem);
+}
+
+.service-cta {
+  margin-top: 14px;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -689,7 +827,8 @@ h3 {
 @media (max-width: 980px) {
   .project-grid,
   .gallery-grid,
-  .contact-grid {
+  .contact-grid,
+  .service-grid {
     grid-template-columns: 1fr;
   }
 
@@ -774,39 +913,13 @@ h3 {
 
   /* Home hero içeriği */
   .hero-content-home {
-    /* Üstten boşluğu kısalt ki başlık ekranda tam görünsün */
-    padding-top: clamp(64px, 14vh, 130px);
+    /* Üstten boşluğu kısalt ki logo ekranda tam görünsün */
+    padding-top: clamp(48px, 9vh, 96px);
     width: 94vw;
   }
 
-  .hero-content-home .hero-title {
-    gap: 0.1rem;
-  }
-
-  /* "ZEN DESIGN" */
-  .hero-title-main {
-    font-size: clamp(1rem, 4.2vw, 1.8rem);
-  }
-
-  /* DESIGN: mobilde de büyük kalsın */
-  .hero-title-support {
-    font-size: clamp(1.6rem, 9vw, 3.2rem);
-    letter-spacing: 0.1em;
-    padding-left: 0.1em;
-  }
-
-  /*
-    "MİMARLIK" — MOBİL ÇÖZÜM
-    clamp(min, preferred, max)
-    min = 2.6rem → en küçük ekranda bile okunabilir
-    preferred = 14vw → 360px ekranda ≈ 50px, çok dar; 390px'de ≈ 54px
-    Aslında 9 harf + letter-spacing için 15-16vw daha iyi:
-      360px * 0.155 = 55.8px → font-size 55.8px, toplam genişlik ≈ 340px ✓
-    max = 5rem → tablet geçişine kadar tutarlı kalır
-  */
-  .hero-title-focus {
-    font-size: clamp(1rem, 5.8vw, 2rem);
-    letter-spacing: clamp(0.06em, 0.5vw, 0.12em);
+  .hero-logo img {
+    width: min(340px, 90vw);
   }
 
   .hero-lead {
@@ -815,13 +928,13 @@ h3 {
   }
 
   .hero-content-home .hero-tagline {
-    margin-top: 52px;
-    font-size: clamp(1.5rem, 6vw, 2.4rem);
+    margin-top: 44px;
+    font-size: clamp(1.3rem, 5.6vw, 2rem);
     padding: 0 8px;
   }
 
   .hero-actions {
-    margin-top: 64px;
+    margin-top: 48px;
     width: 100%;
     flex-direction: column;
     align-items: center;
@@ -836,7 +949,7 @@ h3 {
   }
 
   .hero-founder {
-    margin-top: 52px;
+    margin-top: 44px;
     font-size: 0.82rem;
     padding: 0 16px;
   }
@@ -854,23 +967,12 @@ h3 {
     letter-spacing: 0.04em;
   }
 
-  .hero-title-main {
-    font-size: clamp(0.95rem, 6vw, 1.4rem);
-  }
-
-  .hero-title-support {
-    font-size: clamp(1.4rem, 10vw, 2.4rem);
-    letter-spacing: 0.08em;
-    padding-left: 0.08em;
-  }
-
-  .hero-title-focus {
-    font-size: clamp(0.9rem, 6vw, 1.6rem);
-    letter-spacing: 0.08em;
+  .hero-logo img {
+    width: 92vw;
   }
 
   .hero-content-home .hero-tagline {
-    font-size: clamp(1.3rem, 7vw, 2rem);
+    font-size: clamp(1.15rem, 6.4vw, 1.6rem);
   }
 
   .hero-actions .btn-copper {
@@ -975,7 +1077,7 @@ body.page-out {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 36px;
+    gap: 28px;
     font-size: 1rem;
     letter-spacing: 0.16em;
     opacity: 0;
@@ -999,6 +1101,46 @@ body.page-out {
 
   .home-page .site-nav a.active::after {
     display: none;
+  }
+
+  /* Dropdown: mobil menüde açılır kutu yerine düz liste */
+  .nav-item {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-item > a::after {
+    content: none;
+  }
+
+  .site-nav .dropdown {
+    position: static;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    min-width: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .site-nav .dropdown::before {
+    display: none;
+  }
+
+  .site-nav .dropdown a,
+  .home-page .site-nav .dropdown a {
+    padding: 0;
+    font-size: 0.86rem;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    background: none;
   }
 }
 
@@ -1058,7 +1200,7 @@ body.page-out {
   resize: none;
   width: 100%;
   -webkit-appearance: none;
-  border-radius: 0;
+  border-radius: 10px;
 }
 
 .form-group input::placeholder,

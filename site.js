@@ -7,6 +7,8 @@
     if (!href || href.charAt(0) === '#' ||
         href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0 ||
         href.indexOf('http') === 0) return;
+    /* Aynı sayfa içi çapa (ör. hizmetler.html#ic-mekan) — geçiş yok */
+    if (link.pathname === window.location.pathname && link.hash) return;
     link.addEventListener('click', function (e) {
       e.preventDefault();
       var dest = link.href;
@@ -59,6 +61,7 @@
     if (!parent) return 0;
     if (parent.classList.contains('project-grid') ||
         parent.classList.contains('gallery-grid') ||
+        parent.classList.contains('service-grid') ||
         parent.classList.contains('contact-aside')) {
       return Array.from(parent.children).indexOf(el) * 90;
     }
@@ -75,7 +78,7 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -28px 0px' });
 
   document.querySelectorAll(
-    '.section-head, .content-block, .project-card, .gallery-item, .panel, .cover-content, .single-image, .note'
+    '.section-head, .content-block, .project-card, .gallery-item, .panel, .cover-content, .single-image, .note, .service-card'
   ).forEach(function (el) {
     if (el.getBoundingClientRect().top >= window.innerHeight) {
       var delay = getStaggerDelay(el);
